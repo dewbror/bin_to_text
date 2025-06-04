@@ -2,7 +2,7 @@ bin_to_text 1.0.0
 ===============
 Welcome to bin_to_text v1.0.0
 
-This CLI program can be used to read in text written as binary and convert it to human readable text assuming the binary is ascii encoded.
+Simple CLI program for converting text written as binary and convert it to human readable text, assuming the binary is ascii encoded.
 This program assumes each character is encoded as 8 bits.
 
 Options:

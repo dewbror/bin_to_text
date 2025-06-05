@@ -8,7 +8,7 @@ static void print_info(void)
 {   
     /* Print info */
     printf("Welcome to bin_to_text v1.0.0\n");
-    printf("bin_to_text is a simple CLI program for converting text written as binary to human readable text assuming the binary is ascii encoded.\n");
+    printf("bin_to_text is a simple CLI program for converting text written as binary to human readable text assuming the text is ascii encoded.\n");
     printf("This program assumes each character is encoded as 8 bits.\n");
 }
 
@@ -17,7 +17,7 @@ static void print_help(void)
     /* Print help */
     printf("Options:\n");
     printf("  -f=\"path/to/file\"    Read in binary from a text file and print it as text to stdout.\n");
-    printf("  -b=\"binary-code\"     Read in binary from terminal argument and print it as text to stdout.\n");
+    printf("  -b=\"binary-code\"     Read in binary from argument and print it as text to stdout.\n");
 }
 
 static void parse_bin(const char* bin)
@@ -32,7 +32,7 @@ static void parse_bin(const char* bin)
         if(bin[i] != '1' && bin[i] != '0')
             continue;
         
-        /* If the char '1' then add 2^(j%8) to code, after 8 bits we will have the ascii character in decimal form */
+        /* If the char is '1' then add 2^(j%8) to code, after 8 bits we will have the ascii character in decimal form */
         if(bin[i] == '1')
             code += 1 << (7 - (j % 8));
 
@@ -107,7 +107,7 @@ static int parse_arg(const char* arg)
             printf("Error: Unrecognized option(s)\n");
             return 1;
         }
-        /* If arguemnt begins with -b= then interpret then call parse_bin */
+        /* If arguemnt begins with -b= then call parse_bin */
         parse_bin(++arg);
     }
 
@@ -117,7 +117,7 @@ static int parse_arg(const char* arg)
 int main(int argc, char **argv)
 {
     int i = 0;
-    /* If there are less than 2 arguments print help/info */
+    /* If there are less than 2 arguments print help+info */
     if(argc < 2) {
         print_info();
         print_help();

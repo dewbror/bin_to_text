@@ -30,7 +30,7 @@ static void parse_bin(const char* bin)
         if(bin[i] != '1' && bin[i] != '0')
             continue;
         
-        /* If the char is '1' then add 2^(j%8) to code, after 8 bits we will have the ascii character in decimal form */
+        /* If the char is '1' then add 2^(7 - j%8) to code, after 8 bits we will have the ascii character in decimal form */
         if(bin[i] == '1')
             code += 1 << (7 - (j % 8));
 
@@ -67,7 +67,7 @@ static int parse_file(const char* path_to_file)
         if(c != '1' && c != '0')
             continue;
         
-        /* If the char is '1' then add 2^(j%8) to code, after 8 bits we will have the ascii character in decimal form */
+        /* If the char is '1' then add 2^(7 - j%8) to code, after 8 bits we will have the ascii character in decimal form */
         if(c == '1')
             code += 1 << (7 - (j % 8));
         

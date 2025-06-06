@@ -4,7 +4,6 @@
 #include <string.h>
 
 static void print_info(void)
-
 {   
     /* Print info */
     printf("Welcome to bin_to_text v1.0.0\n");
@@ -26,9 +25,8 @@ static void parse_bin(const char* bin)
     int j = 0;
     int i = 0;
     
-    /* Loop through the string of binary */
+    /* Loop through the chars and look for 1s and 0s */
     for(; bin[i] != '\0'; ++i) {
-        /* We only care about ones and zeroes */
         if(bin[i] != '1' && bin[i] != '0')
             continue;
         
@@ -36,7 +34,7 @@ static void parse_bin(const char* bin)
         if(bin[i] == '1')
             code += 1 << (7 - (j % 8));
 
-        /* After 8 bits we print the character and start over */
+        /* After 8 bits, cast int -> char and print to stdout */
         if((7 - (j++ % 8)) == 0) {
             printf("%c", (char)code);
             code = 0;
@@ -59,14 +57,13 @@ static int parse_file(const char* path_to_file)
         return 1;
     }
     
-    /* Loop through the file contents */
+    /* Loop through the file and look for 1s and 0s */
     while(1) {
         c = fgetc(f);
         
         if(c == EOF)
             break;
         
-        /* We only care about ones and zeroes */
         if(c != '1' && c != '0')
             continue;
         
@@ -74,7 +71,7 @@ static int parse_file(const char* path_to_file)
         if(c == '1')
             code += 1 << (7 - (j % 8));
         
-        /* After 8 bits we print the character and start over */
+        /* After 8 bits, cast int -> char and print to stdout */
         if((7 - (j++ % 8)) == 0) {
             printf("%c", (char)code);
             code = 0;
@@ -90,10 +87,11 @@ static int parse_file(const char* path_to_file)
 
 static int parse_arg(const char* arg)
 {   
-    /* If the first char is not - return error */
+    /* If the first char is not '-' return error */
     if(*arg != '-')
         return 1;
-    
+
+    /* Determine which options is being used */
     if(*++arg == 'f') {
         if(*++arg != '='){
             printf("Error: Unrecognized option(s)\n");

@@ -24,23 +24,26 @@ static void parse_bin(const char* bin)
     int code = 0;
     int j = 0;
     int i = 0;
+    int k = 0;
     
     /* Loop through the chars and look for 1s and 0s */
     for(; bin[i] != '\0'; ++i) {
         if(bin[i] != '1' && bin[i] != '0')
             continue;
-        
+
+        k = 7 - (j++ % 8);
+
         /* If the char is '1' then add 2^(7 - j%8) to code, after 8 bits we will have the ascii character in decimal form */
         if(bin[i] == '1')
-            code += 1 << (7 - (j % 8));
-
+            code += 1 << k;
+    
+        
         /* After 8 bits, cast int -> char and print to stdout */
-        if((7 - (j++ % 8)) == 0) {
+        if(k == 0) {
             printf("%c", (char)code);
             code = 0;
         }
     }
-
     printf("\n");
 }
 
@@ -49,6 +52,7 @@ static int parse_file(const char* path_to_file)
     char c = '\0';
     int code = 0;
     int j = 0;
+    int k = 0;
     
     /* Open file and handle potential error */
     FILE* f = fopen(path_to_file, "r");
@@ -66,22 +70,23 @@ static int parse_file(const char* path_to_file)
         
         if(c != '1' && c != '0')
             continue;
-        
+
+        k = 7 - (j++ % 8);
+
         /* If the char is '1' then add 2^(7 - j%8) to code, after 8 bits we will have the ascii character in decimal form */
         if(c == '1')
-            code += 1 << (7 - (j % 8));
+            code += 1 << k;
+    
         
         /* After 8 bits, cast int -> char and print to stdout */
-        if((7 - (j++ % 8)) == 0) {
+        if(k == 0) {
             printf("%c", (char)code);
             code = 0;
         }
     }
-    
     printf("\n");
 
     fclose(f);
-
     return 0;
 }
 
